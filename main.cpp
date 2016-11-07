@@ -2,9 +2,9 @@
 // *********************************************************************************************************************************
 // PA-3: Path Tracing
 //
-// Name: _________________________________
+// Name: Brian Yee________________________
 //
-// ID: ___________________________________
+// ID: 00993104___________________________
 //
 // * Individual Work
 // * Write the missing code -- i.e.,  // TO DO Task # ...
@@ -273,11 +273,13 @@ class m_Scene {
 // float range min and max
 //
 // ====================================================
-float GenerateRandomFloat(float min, float max) 
+float GenerateRandomFloat(float min, float max)
 {
-	// YOUR CODE HERE
+    float r = static_cast <float> (std::rand()) / static_cast <float> (RAND_MAX);
+    r *= max - min;
+    r += min;
+    return r;
 }
-
 
 // ----------------------------------------------------------------------------
 // BuildOrthonormalSystem ()
@@ -651,6 +653,9 @@ m_Vector ImagePlaneCoordinates(const double x, const double y)
 // -----------------------------------------
 int main() {
 	srand(time(NULL));
+
+    for (int i =0 ; i < 100; i++)
+        printf("%d\n", GenerateRandomFloat(i, 100));
 
 	// Buil d scene objects
 	AddPlanes();
