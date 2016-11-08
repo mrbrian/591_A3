@@ -66,8 +66,8 @@ const double m_eps=1e-6;
 //    Final Path Traced Rendered Scene
 //    Number of Samples per Pixel
 // -----------------------------------------
-const int m_pixmap_width = 155, m_pixmap_height = 155;
-const double m_samples_per_pixel = 10;
+const int m_pixmap_width = 255, m_pixmap_height = 255;
+const double m_samples_per_pixel = 20;
 
 using namespace std;
 
@@ -344,9 +344,16 @@ m_Vector HemisphereSampling(m_Vector m_normal)
 // Tip: use m_RND_2 for Xi_1 and Xi_2
 // 
 // =================================================================
-	double vx = // YOUR CODE HERE
-	double vy = // YOUR CODE HERE
-	double vz = // YOUR CODE HERE
+    float r_1 = m_RND_2;
+    float r_2 = m_RND_2;
+
+    float r = sqrt(1 - r_1 * r_2);
+    float phi = 2 * M_PI * r_2;
+
+    double vx = cos(phi) * r;
+    double vy = sin(phi) * r;
+    double vz = r_1;
+
 	m_Vector sampled_ray_direction = m_Vector(vx, vy, vz);
 
 	// Now we build an otrhotnormal frame system 
@@ -472,8 +479,8 @@ void m_PathTracer (m_Ray &ray, int depth, m_Vector& color)
 	//
 	// =================================================================
 
-	double ktot = // YOUR CODE HERE
-	double m_random_float = // YOUR CODE HERE
+    double ktot = intersection.object->kd + intersection.object->ks + intersection.object->kr;
+    double m_random_float = m_RND_2;
 
 	if (m_random_float < intersection.object->kd) // send a diffuse ray
 	{
@@ -491,7 +498,7 @@ void m_PathTracer (m_Ray &ray, int depth, m_Vector& color)
 		// Slides #26 and #27
 		// =========================================================================
 
-		ray.direction = // YOUR CODE HERE
+        ray.direction = HemisphereSampling(normal_at_hit_point);
 
 		double cosine_t = ray.direction.DotProduct(normal_at_hit_point);
 		m_Vector tmp;
@@ -654,9 +661,6 @@ m_Vector ImagePlaneCoordinates(const double x, const double y)
 int main() {
 	srand(time(NULL));
 
-    for (int i =0 ; i < 100; i++)
-        printf("%d\n", GenerateRandomFloat(i, 100));
-
 	// Buil d scene objects
 	AddPlanes();
 	AddSpheres();
@@ -707,8 +711,11 @@ int main() {
 				// Slide #20
 				//
 				// =================================================================
-				camera.x = // YOUR CODE HERE
-				camera.y = // YOUR CODE HERE
+                float r_1 = m_RND_2;
+                float r_2 = m_RND_2;
+                float c = 2000;
+                camera.x = camera.x + (r_1 / c);
+                camera.y = camera.y + (r_2 / c);
 
 				// Ray Direction: point from the origin to the camera plane
 				ray.direction = (camera - ray.origin).Normalize(); 
