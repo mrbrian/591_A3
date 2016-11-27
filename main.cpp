@@ -66,7 +66,7 @@ const double m_eps=1e-6;
 //    Final Path Traced Rendered Scene
 //    Number of Samples per Pixel
 // -----------------------------------------
-const int m_pixmap_width = 155, m_pixmap_height = 155;
+const int m_pixmap_width = 255, m_pixmap_height = 255;
 const double m_samples_per_pixel = 100;
 
 using namespace std;
@@ -275,9 +275,9 @@ class m_Scene {
 // ====================================================
 float GenerateRandomFloat(float min, float max)
 {
-    float r = static_cast <float> (std::rand()) / static_cast <float> (RAND_MAX);
-    r *= max - min;
-    r += min;
+    float r = static_cast <float> (std::rand()) / static_cast <float> (RAND_MAX);  // random number in [0,1]
+    r *= max - min;     // scale by delta between min/max
+    r += min;           // offset by min
     return r;
 }
 
@@ -713,7 +713,7 @@ int main() {
 				// =================================================================
                 float r_1 = m_RND_1;
                 float r_2 = m_RND_1;
-                float c = 1000;
+                float c = 10000;
                 camera.x = camera.x + (r_1 / c);
                 camera.y = camera.y + (r_2 / c);
 
