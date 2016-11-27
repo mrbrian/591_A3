@@ -66,8 +66,8 @@ const double m_eps=1e-6;
 //    Final Path Traced Rendered Scene
 //    Number of Samples per Pixel
 // -----------------------------------------
-const int m_pixmap_width = 255, m_pixmap_height = 255;
-const double m_samples_per_pixel = 20;
+const int m_pixmap_width = 155, m_pixmap_height = 155;
+const double m_samples_per_pixel = 100;
 
 using namespace std;
 
@@ -347,7 +347,7 @@ m_Vector HemisphereSampling(m_Vector m_normal)
     float r_1 = m_RND_2;
     float r_2 = m_RND_2;
 
-    float r = sqrt(1 - r_1 * r_2);
+    float r = sqrt(1 - r_1 * r_1);
     float phi = 2 * M_PI * r_2;
 
     double vx = cos(phi) * r;
@@ -480,7 +480,7 @@ void m_PathTracer (m_Ray &ray, int depth, m_Vector& color)
 	// =================================================================
 
     double ktot = intersection.object->kd + intersection.object->ks + intersection.object->kr;
-    double m_random_float = m_RND_2;
+    double m_random_float = m_RND_2 * ktot;
 
 	if (m_random_float < intersection.object->kd) // send a diffuse ray
 	{
@@ -676,7 +676,7 @@ int main() {
 	// start timing...
 	clock_t start = clock();
 
-	//#pragma omp parallel for schedule(dynamic)
+    //#pragma omp parallel for schedule(dynamic)
 
 	// for every pixel...
 	for (int col = 0; col < m_pixmap_width; col++) 
@@ -711,9 +711,9 @@ int main() {
 				// Slide #20
 				//
 				// =================================================================
-                float r_1 = m_RND_2;
-                float r_2 = m_RND_2;
-                float c = 2000;
+                float r_1 = m_RND_1;
+                float r_2 = m_RND_1;
+                float c = 1000;
                 camera.x = camera.x + (r_1 / c);
                 camera.y = camera.y + (r_2 / c);
 
