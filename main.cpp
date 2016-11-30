@@ -67,7 +67,7 @@ const double m_eps=1e-6;
 //    Number of Samples per Pixel
 // -----------------------------------------
 const int m_pixmap_width = 255, m_pixmap_height = 255;
-const double m_samples_per_pixel = 100;
+const double m_samples_per_pixel = 10;
 
 using namespace std;
 
@@ -480,7 +480,7 @@ void m_PathTracer (m_Ray &ray, int depth, m_Vector& color)
 	// =================================================================
 
     double ktot = intersection.object->kd + intersection.object->ks + intersection.object->kr;
-    double m_random_float = m_RND_2 * ktot;
+    double m_random_float = GenerateRandomFloat(0, ktot);
 
 	if (m_random_float < intersection.object->kd) // send a diffuse ray
 	{
