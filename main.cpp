@@ -67,7 +67,7 @@ const double m_eps=1e-6;
 //    Number of Samples per Pixel
 // -----------------------------------------
 const int m_pixmap_width = 255, m_pixmap_height = 255;
-const double m_samples_per_pixel = 10;
+const double m_samples_per_pixel = 100;
 
 using namespace std;
 
